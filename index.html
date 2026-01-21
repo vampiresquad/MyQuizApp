@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কুইজ মাস্টার - জ্ঞান বাড়ান, পুরস্কার জিতুন</title>
+    <title>কুইজ মাস্টার ২.০</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -11,18 +11,21 @@
 
     <div class="container">
         <header>
-            <h1>🏆 কুইজ মাস্টার</h1>
-            <p>আপনার মেধা যাচাই করুন মুহূর্তেই!</p>
+            <h1>🧠 কুইজ মাস্টার</h1>
+            <div class="timer-box">
+                <span id="timer-icon">⏳</span>
+                <span id="timer">১৫</span>
+            </div>
         </header>
 
         <div id="game-screen" class="card">
-            <div class="score-board">
-                <span>পয়েন্ট: <b id="score">0</b></span>
-                <span>লেভেল: <b id="level">1</b></span>
+            <div class="stats">
+                <div class="stat-item">স্কোর: <span id="score">0</span></div>
+                <div class="stat-item">লেভেল: <span id="level">1</span></div>
             </div>
             
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress"></div>
             </div>
 
             <h2 id="question">প্রশ্ন লোড হচ্ছে...</h2>
@@ -31,6 +34,19 @@
                 </div>
 
             <p id="feedback" class="feedback"></p>
+        </div>
+
+        <div id="result-screen" class="card hidden">
+            <h2>খেলা শেষ!</h2>
+            <div class="final-score">আপনার স্কোর: <span id="final-score-display">0</span></div>
+            <p id="final-message"></p>
+            
+            <button class="btn-share" onclick="shareOnFacebook()">
+                🚀 ফেসবুকে শেয়ার করুন
+            </button>
+            <button class="btn-restart" onclick="location.reload()">
+                🔄 আবার খেলুন
+            </button>
         </div>
 
         <footer>
