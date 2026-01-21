@@ -1,132 +1,148 @@
 :root {
-    --primary: #6C63FF;
-    --secondary: #2ecc71;
-    --wrong: #e74c3c;
-    --bg: #f4f7f6;
-    --text: #2c3e50;
+    --glass: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #ffffff;
+    --accent: #ffeb3b;
+    --correct: #00e676;
+    --wrong: #ff5252;
 }
 
 body {
     font-family: 'Hind Siliguri', sans-serif;
-    background: var(--bg);
     margin: 0;
+    min-height: 100vh;
+    /* অ্যানিমেটেড গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    user-select: none;
+    overflow-x: hidden;
+    color: var(--text-color);
+    user-select: none; /* টেক্সট কপি করা বন্ধ */
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ভাসমান বল (Blobs) */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: float 10s infinite alternate;
+}
+.blob-1 { top: -10%; left: -10%; width: 300px; height: 300px; background: #ff00cc; }
+.blob-2 { bottom: -10%; right: -10%; width: 350px; height: 350px; background: #33ccff; animation-delay: -5s; }
+
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, 50px); }
 }
 
 .container {
     width: 90%;
-    max-width: 420px;
+    max-width: 450px;
     text-align: center;
+    z-index: 10;
 }
 
-/* টাইমার ডিজাইন */
-.timer-box {
-    background: white;
-    display: inline-block;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    color: var(--wrong);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
-    font-size: 18px;
-}
+h1 { margin: 10px 0; font-size: 28px; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-.card {
-    background: white;
+/* গ্লাস কার্ড ডিজাইন */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
     padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    margin-bottom: 20px;
     transition: transform 0.3s;
 }
 
 .hidden { display: none; }
+.centered { text-align: center; padding: 40px 20px; }
 
-.stats {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-weight: 600;
-    color: #7f8c8d;
+/* স্টার্ট স্ক্রিন লোগো */
+.logo-box { font-size: 60px; margin-bottom: 10px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.high-score-box {
+    background: rgba(0,0,0,0.2);
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: inline-block;
+    margin: 15px 0;
+    font-weight: bold;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
-.progress-container {
-    background: #ecf0f1;
-    height: 8px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    overflow: hidden;
+/* গেম হেডার */
+.game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.timer-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: bold;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), #a8a4ff);
-    width: 0%;
-    transition: width 0.4s ease;
+/* লাইফলাইন বাটন */
+.btn-lifeline {
+    background: linear-gradient(45deg, #FF9800, #F44336);
+    border: none; padding: 8px 15px; border-radius: 30px;
+    color: white; font-weight: bold; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+    transition: transform 0.2s; font-size: 14px;
 }
+.btn-lifeline:hover { transform: scale(1.05); }
+.btn-lifeline:disabled { opacity: 0.5; cursor: not-allowed; background: #555; }
+.option-hidden { opacity: 0; pointer-events: none; }
 
-h2 { color: var(--text); font-size: 20px; margin-top: 0; }
+/* স্ট্যাটস এবং প্রোগ্রেস */
+.stats-bar { display: flex; justify-content: space-between; margin-bottom: 15px; }
+.stat-pill { background: rgba(255, 255, 255, 0.1); padding: 5px 15px; border-radius: 15px; font-size: 14px; }
 
+.progress-wrapper { background: rgba(255, 255, 255, 0.1); height: 6px; border-radius: 10px; margin-bottom: 25px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s ease; box-shadow: 0 0 10px var(--accent); }
+
+.question-box h2 { font-size: 20px; line-height: 1.4; margin-bottom: 20px; }
+
+/* অপশন বাটন */
+.options-grid { display: flex; flex-direction: column; gap: 10px; }
 .btn-option {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    margin: 12px 0;
-    border: 2px solid #ecf0f1;
-    border-radius: 12px;
-    background: white;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text);
+    background: rgba(255, 255, 255, 0.9);
+    border: none; padding: 14px; border-radius: 15px;
+    font-size: 16px; color: #333; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; text-align: left; position: relative; font-family: inherit;
 }
+.btn-option:hover:not(:disabled) { transform: translateY(-3px); background: #fff; }
+.correct { background: var(--correct) !important; color: white !important; box-shadow: 0 0 15px var(--correct); }
+.wrong { background: var(--wrong) !important; color: white !important; animation: shake 0.4s; }
 
-.btn-option:hover:not(:disabled) {
-    background: #f8f9fa;
-    border-color: var(--primary);
-    transform: translateY(-2px);
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+.feedback-text { height: 20px; margin-top: 15px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+/* রেজাল্ট এবং বাটন */
+.final-score-circle {
+    width: 100px; height: 100px; background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin: 20px auto; font-size: 36px; font-weight: bold; border: 2px solid rgba(255,255,255,0.3);
 }
-
-.correct { background: #d4edda !important; border-color: var(--secondary) !important; color: #155724; }
-.wrong { background: #f8d7da !important; border-color: var(--wrong) !important; color: #721c24; }
-
-/* শেক অ্যানিমেশন (ভুল উত্তরের জন্য) */
-.shake { animation: shake 0.5s; }
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+.btn-primary, .btn-secondary {
+    width: 100%; padding: 14px; border-radius: 50px; font-size: 16px; font-weight: bold;
+    cursor: pointer; border: none; margin-bottom: 12px; font-family: inherit;
 }
-
-.feedback { height: 20px; font-weight: bold; margin-top: 10px; }
-
-/* রেজাল্ট বাটন */
-.final-score { font-size: 32px; color: var(--primary); font-weight: bold; margin: 20px 0; }
-.btn-share {
-    background: #1877F2;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-.btn-restart {
-    background: white;
-    border: 2px solid var(--text);
-    padding: 10px 25px;
-    border-radius: 50px;
-    width: 100%;
-    cursor: pointer;
-    font-weight: bold;
-}
+.btn-lg { font-size: 20px !important; padding: 15px 40px !important; background: linear-gradient(45deg, #11998e, #38ef7d) !important; box-shadow: 0 5px 20px rgba(56, 239, 125, 0.4); }
+.btn-share { background: #1877F2; color: white; }
+.btn-restart { background: white; color: #333; }
+footer p { font-size: 12px; opacity: 0.7; margin-top: 20px; }
