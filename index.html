@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কুইজ মাস্টার - জ্ঞান বাড়ান, পুরস্কার জিতুন</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🏆 কুইজ মাস্টার</h1>
+            <p>আপনার মেধা যাচাই করুন মুহূর্তেই!</p>
+        </header>
+
+        <div id="game-screen" class="card">
+            <div class="score-board">
+                <span>পয়েন্ট: <b id="score">0</b></span>
+                <span>লেভেল: <b id="level">1</b></span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <h2 id="question">প্রশ্ন লোড হচ্ছে...</h2>
+            
+            <div class="options" id="options-container">
+                </div>
+
+            <p id="feedback" class="feedback"></p>
+        </div>
+
+        <footer>
+            <p>Automated with ❤️ by Shourov</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
