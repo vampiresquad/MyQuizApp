@@ -1,35 +1,125 @@
-// কুইজ ডাটাবেস
-const quizData = [
-    { question: "বাংলাদেশের জাতীয় দিবস কোনটি?", options: ["২১শে ফেব্রুয়ারি", "২৬শে মার্চ", "১৬ই ডিসেম্বর", "১৪ই এপ্রিল"], correct: 1 },
-    { question: "পানির রাসায়নিক সংকেত কী?", options: ["CO2", "H2O", "O2", "NaCl"], correct: 1 },
-    { question: "সূর্য একটি ___?", options: ["গ্রহ", "নক্ষত্র", "উপগ্রহ", "ছায়াপথ"], correct: 1 },
-    { question: "কোন প্রাণী দাঁড়িয়ে ঘুমায়?", options: ["হাতি", "ঘোড়া", "জিরাফ", "উট"], correct: 1 },
-    { question: "১ গিগাবাইট (GB) = কত মেগাবাইট?", options: ["১০০০", "১০২৪", "৫১২", "২০৪৮"], correct: 1 },
-    { question: "সবচেয়ে হালকা গ্যাস কোনটি?", options: ["অক্সিজেন", "হাইড্রোজেন", "নাইট্রোজেন", "হিলিয়াম"], correct: 1 },
-    { question: "মানুষের শরীরে হাড়ের সংখ্যা কত?", options: ["২০৬", "২০৮", "৩০৬", "১০০"], correct: 0 },
-    { question: "বিশ্বের বৃহত্তম বদ্বীপ কোনটি?", options: ["সুন্দরবন", "গ্রিনল্যান্ড", "মাদাগাস্কার", "গাঙ্গেয় বদ্বীপ"], correct: 3 },
-    { question: "ChatGPT এর নির্মাতা প্রতিষ্ঠান কোনটি?", options: ["Google", "Microsoft", "OpenAI", "Meta"], correct: 2 },
-    { question: "ক্রিকেট খেলায় স্ট্যাম্পের দৈর্ঘ্য কত?", options: ["২৮ ইঞ্চি", "৩০ ইঞ্চি", "২২ ইঞ্চি", "২৫ ইঞ্চি"], correct: 0 }
+// ==========================================
+// 🧠 কুইজ মাস্টার প্রো - আলটিমেট ডাটাবেস
+// ==========================================
+// এখানে ৫০টি প্রশ্ন দেওয়া আছে। আপনি একই ফরম্যাটে আরও প্রশ্ন যোগ করতে পারেন।
+
+const rawQuizData = [
+    // --- বাংলাদেশ ---
+    { q: "বাংলাদেশের জাতীয় দিবস কোনটি?", o: ["২১শে ফেব্রুয়ারি", "২৬শে মার্চ", "১৬ই ডিসেম্বর", "১৪ই এপ্রিল"], a: 1 },
+    { q: "বাংলাদেশের বৃহত্তম বদ্বীপ কোনটি?", o: ["সুন্দরবন", "দ্বীপ বদ্বীপ", "মেঘনা বদ্বীপ", "গাঙ্গেয় বদ্বীপ"], a: 0 },
+    { q: "বাংলাদেশের টাকার নোটে কার ছবি থাকে?", o: ["কাজী নজরুল", "বঙ্গবন্ধু", "প্রধানমন্ত্রী", "রবীন্দ্রনাথ"], a: 1 },
+    { q: "বাংলাদেশের জাতীয় খেলা কোনটি?", o: ["ক্রিকেট", "ফুটবল", "কাবাডি", "হকি"], a: 2 },
+    { q: "মুক্তিযুদ্ধ কত সালে হয়েছিল?", o: ["১৯৫২", "১৯৬৯", "১৯৭১", "১৯৯০"], a: 2 },
+    { q: "বাংলাদেশের দীর্ঘতম নদী কোনটি?", o: ["পদ্মা", "মেঘনা", "যমুনা", "সুরমা"], a: 1 },
+    { q: "সুন্দরবন কোন জেলায় অবস্থিত?", o: ["খুলনা", "বরিশাল", "চট্টগ্রাম", "সিলেট"], a: 0 },
+    { q: "বাংলাদেশের প্রথম রাষ্ট্রপতি কে?", o: ["তাজউদ্দীন আহমদ", "সৈয়দ নজরুল", "বঙ্গবন্ধু শেখ মুজিব", "জিয়াউর রহমান"], a: 2 },
+    
+    // --- বিজ্ঞান ও প্রযুক্তি ---
+    { q: "পানির রাসায়নিক সংকেত কী?", o: ["CO2", "H2O", "O2", "NaCl"], a: 1 },
+    { q: "কম্পিউটারের মস্তিষ্ক বলা হয় কোনটিকে?", o: ["RAM", "CPU", "SSD", "Monitor"], a: 1 },
+    { q: "সবচেয়ে হালকা গ্যাস কোনটি?", o: ["অক্সিজেন", "হাইড্রোজেন", "নাইট্রোজেন", "হিলিয়াম"], a: 1 },
+    { q: "মানুষের শরীরে হাড়ের সংখ্যা কত?", o: ["২০৬", "২০৮", "৩০৬", "১০০"], a: 0 },
+    { q: "আলোর গতি প্রতি সেকেন্ডে কত?", o: ["৩ লক্ষ কিমি", "২ লক্ষ কিমি", "১ লক্ষ কিমি", "৫ লক্ষ কিমি"], a: 0 },
+    { q: "ChatGPT এর নির্মাতা প্রতিষ্ঠান কোনটি?", o: ["Google", "Microsoft", "OpenAI", "Meta"], a: 2 },
+    { q: "কোন গ্রহকে লাল গ্রহ বলা হয়?", o: ["বুধ", "শুক্র", "মঙ্গল", "শনি"], a: 2 },
+    { q: "বৈদ্যুতিক বাতি কে আবিষ্কার করেন?", o: ["আইনস্টাইন", "নিউটন", "টমাস আলভা এডিসন", " গ্রাহাম বেল"], a: 2 },
+    { q: "1 GB = কত MB?", o: ["1000", "1024", "512", "2048"], a: 1 },
+
+    // --- সাধারণ জ্ঞান ---
+    { q: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?", o: ["আটলান্টিক", "ভারত", "প্রশান্ত", "আর্কটিক"], a: 2 },
+    { q: "সূর্য একটি ___?", o: ["গ্রহ", "নক্ষত্র", "উপগ্রহ", "ছায়াপথ"], a: 1 },
+    { q: "কোন প্রাণী দাঁড়িয়ে ঘুমায়?", o: ["হাতি", "ঘোড়া", "জিরাফ", "উট"], a: 1 },
+    { q: "পৃথিবীর ফুসফুস বলা হয় কাকে?", o: ["হিমালয়", "সুন্দরবন", "আমাজন জঙ্গল", "সাহারা"], a: 2 },
+    { q: "বিশ্বের ক্ষুদ্রতম দেশ কোনটি?", o: ["ভ্যাটিকান সিটি", "মালদ্বীপ", "নেপাল", "ভুটান"], a: 0 },
+    { q: "জাপানের মুদ্রার নাম কী?", o: ["ডলার", "টাকা", "ইয়েন", "ইউরো"], a: 2 },
+    { q: "পিরামিড কোন দেশে অবস্থিত?", o: ["ভারত", "মিশর", "চিন", "ইতালি"], a: 1 },
+    
+    // --- খেলাধুলা ---
+    { q: "ফুটবল খেলায় প্রতি দলে কতজন থাকে?", o: ["১০", "১১", "১২", "৯"], a: 1 },
+    { q: "ক্রিকেট বিশ্বকাপের বর্তমান চ্যাম্পিয়ন কে (২০২৪)?", o: ["ভারত", "অস্ট্রেলিয়া", "ইংল্যান্ড", "পাকিস্তান"], a: 0 },
+    { q: "মেসি কোন দেশের খেলোয়াড়?", o: ["ব্রাজিল", "পর্তুগাল", "আর্জেন্টিনা", "ফ্রান্স"], a: 2 },
+    { q: "ক্রিকেটে স্ট্যাম্পের দৈর্ঘ্য কত?", o: ["২৮ ইঞ্চি", "৩০ ইঞ্চি", "২২ ইঞ্চি", "২৫ ইঞ্চি"], a: 0 },
+    { q: "অলিম্পিক কত বছর পর পর হয়?", o: ["২ বছর", "৩ বছর", "৪ বছর", "৫ বছর"], a: 2 },
+
+    // --- ধর্ম ও সংস্কৃতি ---
+    { q: "পবিত্র কুরআন শরীফে কতটি সূরা আছে?", o: ["১১০", "১১৪", "১২০", "১১৩"], a: 1 },
+    { q: "ঈদুল ফিতর কোন মাসে পালিত হয়?", o: ["রমজান", "শাওয়াল", "জিলহজ্জ", "মহরম"], a: 1 },
+    { q: "মসজিদের শহর বলা হয় কোনটিকে?", o: ["মক্কা", "মদিনা", "ঢাকা", "ইস্তাম্বুল"], a: 2 },
+    { q: "রামায়ণ কোন ধর্মের ধর্মগ্রন্থ?", o: ["বৌদ্ধ", "খ্রিস্টান", "হিন্দু", "ইসলাম"], a: 2 },
+
+    // --- আরও বিবিধ ---
+    { q: "ফেসবুকের জনক কে?", o: ["বিল গেটস", "মার্ক জাকারবার্গ", "স্টিভ জবস", "এলন মাস্ক"], a: 1 },
+    { q: "কোন প্রাণী জিহ্বা দিয়ে শোনে?", o: ["সাপ", "ব্যাঙ", "টিকটিকি", "মাছ"], a: 0 },
+    { q: "মশা কয়টি রোগ ছড়ায়?", o: ["ডেঙ্গু", "ম্যালেরিয়া", "উভয়ই", "কোনটিই নয়"], a: 2 },
+    { q: "কোন রঙের তরঙ্গদৈর্ঘ্য সবচেয়ে বেশি?", o: ["নীল", "সবুজ", "লাল", "বেগুনী"], a: 2 },
+    { q: "বরফ গলতে শুরু করে কত তাপমাত্রায়?", o: ["100°C", "0°C", "-10°C", "10°C"], a: 1 },
+    { q: "বাংলাদেশের সর্বোচ্চ পর্বতশৃঙ্গ কোনটি?", o: ["কিওক্রাডং", "তাজিংডং", "গারো পাহাড়", "লালমাই"], a: 1 },
+    { q: "জাতীয় স্মৃতিসৌধ কোথায় অবস্থিত?", o: ["সাভার", "গাজীপুর", "উত্তরা", "মিরপুর"], a: 0 },
+    { q: "শহীদ বুদ্ধিজীবী দিবস কবে?", o: ["১৬ ডিসেম্বর", "১৪ ডিসেম্বর", "২১ ফেব্রুয়ারি", "২৬ মার্চ"], a: 1 },
+    { q: "পদ্মা সেতুর দৈর্ঘ্য কত?", o: ["৬.১৫ কিমি", "৫.১৫ কিমি", "৪.৮ কিমি", "৭ কিমি"], a: 0 },
+    { q: "কোন ফলের গায়ে চোখ থাকে?", o: ["আনারস", "নারকেল", "লিচু", "কাঁঠাল"], a: 0 },
+    { q: "সবচেয়ে বুদ্ধিমান প্রাণী কোনটি?", o: ["কুকুর", "ডলফিন", "শিম্পাঞ্জি", "বিড়াল"], a: 2 },
+    { q: "YouTube এর মালিক কে?", o: ["Facebook", "Amazon", "Google", "Apple"], a: 2 },
+    { q: "পৃথিবীর একমাত্র উপগ্রহ কোনটি?", o: ["চাঁদ", "টাইটান", "ইউরোপা", "ফোবস"], a: 0 },
+    { q: "মধু কখনো নষ্ট হয় না—এটা কি সত্য?", o: ["হ্যাঁ", "না", "অল্প দিনে হয়", "জানি না"], a: 0 }
 ];
 
+// ==========================================
+// ⚙️ গেম লজিক ও কন্ট্রোলার
+// ==========================================
+
+let quizData = []; // শাফল করা প্রশ্ন এখানে থাকবে
 let currentQuiz = 0;
 let score = 0;
-let level = 1;
 let timer;
-let timeLeft = 15; // প্রতি প্রশ্নের জন্য ১৫ সেকেন্ড
+let timeLeft = 15;
+let lifeLineUsed = false;
 
-// HTML এলিমেন্ট
+// HTML Elements
+const startScreen = document.getElementById('start-screen');
+const gameScreen = document.getElementById('game-screen');
+const resultScreen = document.getElementById('result-screen');
+const greetingEl = document.getElementById('greeting');
+const bestScoreEl = document.getElementById('best-score');
+
 const questionEl = document.getElementById('question');
 const optionsContainer = document.getElementById('options-container');
 const scoreEl = document.getElementById('score');
-const levelEl = document.getElementById('level');
+const qCountEl = document.getElementById('q-count');
 const progressEl = document.getElementById('progress');
 const feedbackEl = document.getElementById('feedback');
 const timerEl = document.getElementById('timer');
-const gameScreen = document.getElementById('game-screen');
-const resultScreen = document.getElementById('result-screen');
+const lifelineBtn = document.getElementById('btn-5050');
 
-// সাউন্ড সিস্টেম (ফাইল ছাড়া সাউন্ড তৈরি করবে)
+// 1. লোড হওয়ার সাথে সাথে সেটআপ
+window.onload = function() {
+    // স্মার্ট গ্রিটিং
+    const hour = new Date().getHours();
+    let greeting = "হ্যালো";
+    if (hour >= 5 && hour < 12) greeting = "শুভ সকাল";
+    else if (hour >= 12 && hour < 17) greeting = "শুভ অপরাহ্ন";
+    else if (hour >= 17 && hour < 20) greeting = "শুভ সন্ধ্যা";
+    greetingEl.innerText = greeting;
+
+    // হাই স্কোর লোড
+    const savedScore = localStorage.getItem('quizHighScore') || 0;
+    bestScoreEl.innerText = savedScore;
+};
+
+// 2. গেম শুরু
+function startGame() {
+    playSound('click');
+    startScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    
+    // প্রশ্ন শাফল করা (যাতে প্রতিবার আলাদা প্রশ্ন আসে)
+    quizData = [...rawQuizData].sort(() => Math.random() - 0.5);
+    // আমরা চাইলে এখান থেকে প্রথম ২০টি প্রশ্ন নিয়ে গেম সাজাতে পারি, তবে এখন সব চলবে
+    
+    loadQuiz();
+}
+
+// 3. সাউন্ড সিস্টেম (অটোমেটেড)
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playSound(type) {
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -38,52 +128,53 @@ function playSound(type) {
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     
+    const now = audioCtx.currentTime;
     if (type === 'correct') {
-        osc.type = 'sine'; // মিষ্টি সাউন্ড
-        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
+        osc.type = 'sine'; osc.frequency.setValueAtTime(600, now); osc.frequency.exponentialRampToValueAtTime(1000, now + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3);
     } else if (type === 'wrong') {
-        osc.type = 'sawtooth'; // কর্কশ সাউন্ড
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.3);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
+        osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.linearRampToValueAtTime(100, now + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3);
+    } else if (type === 'click' || type === 'lifeline') {
+        osc.type = 'triangle'; osc.frequency.setValueAtTime(400, now); osc.frequency.linearRampToValueAtTime(600, now + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1); osc.start(now); osc.stop(now + 0.1);
+    } else if (type === 'win') {
+        osc.type = 'square'; osc.frequency.setValueAtTime(400, now); osc.frequency.linearRampToValueAtTime(800, now + 0.2);
+        gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 1);
+        osc.start(now); osc.stop(now + 1);
     }
 }
 
-// গেম শুরু
-loadQuiz();
-
+// 4. প্রশ্ন লোড এবং টাইমার
 function loadQuiz() {
     clearInterval(timer);
     timeLeft = 15;
     timerEl.innerText = timeLeft;
-    timerEl.style.color = "#e74c3c";
+    timerEl.style.color = "white";
     
     optionsContainer.innerHTML = '';
     feedbackEl.innerText = '';
     
+    // গেম শেষ?
     if(currentQuiz >= quizData.length) {
-        showResult();
+        endGame();
         return;
     }
 
-    const currentQuizData = quizData[currentQuiz];
-    questionEl.innerText = currentQuizData.question;
+    const currentData = quizData[currentQuiz];
+    questionEl.innerText = currentData.q;
+    qCountEl.innerText = `${currentQuiz + 1} / ${quizData.length}`;
     
     // প্রোগ্রেস বার
     const progressPercent = ((currentQuiz) / quizData.length) * 100;
     progressEl.style.width = `${progressPercent}%`;
 
     // অপশন তৈরি
-    currentQuizData.options.forEach((option, index) => {
+    currentData.o.forEach((option, index) => {
         const button = document.createElement('button');
         button.innerText = option;
         button.classList.add('btn-option');
+        button.id = `option-${index}`;
         button.onclick = () => checkAnswer(index, button);
         optionsContainer.appendChild(button);
     });
@@ -95,84 +186,111 @@ function startTimer() {
     timer = setInterval(() => {
         timeLeft--;
         timerEl.innerText = timeLeft;
-        if(timeLeft <= 5) timerEl.style.color = "red"; // শেষ ৫ সেকেন্ড লাল হবে
-        
+        if(timeLeft <= 5) timerEl.style.color = "#ff5252";
         if(timeLeft === 0) {
             clearInterval(timer);
             playSound('wrong');
-            feedbackEl.innerText = "সময় শেষ!";
-            feedbackEl.style.color = "red";
+            feedbackEl.innerText = "সময় শেষ! 😢";
+            feedbackEl.style.color = "#ff5252";
             autoNext();
         }
     }, 1000);
 }
 
-function checkAnswer(selectedIndex, selectedButton) {
+// 5. উত্তর চেক করা
+function checkAnswer(selectedIndex, btn) {
     clearInterval(timer);
-    const currentQuizData = quizData[currentQuiz];
-    const allButtons = optionsContainer.children;
+    const currentData = quizData[currentQuiz];
+    const allBtns = optionsContainer.children;
+    for(let b of allBtns) b.disabled = true;
 
-    for(let btn of allButtons) btn.disabled = true;
-
-    if (selectedIndex === currentQuizData.correct) {
+    if(selectedIndex === currentData.a) {
         playSound('correct');
         score += 10;
-        selectedButton.classList.add('correct');
-        feedbackEl.innerText = "সঠিক উত্তর!";
-        feedbackEl.style.color = "green";
+        btn.classList.add('correct');
+        feedbackEl.innerText = "সঠিক উত্তর! 🎉";
+        feedbackEl.style.color = "#00e676";
     } else {
         playSound('wrong');
-        selectedButton.classList.add('wrong');
-        gameScreen.classList.add('shake'); // ভুল হলে কাঁপবে
+        btn.classList.add('wrong');
+        gameScreen.classList.add('shake');
         setTimeout(() => gameScreen.classList.remove('shake'), 500);
-        
-        // সঠিক উত্তর দেখিয়ে দেওয়া
-        allButtons[currentQuizData.correct].classList.add('correct');
-        feedbackEl.innerText = "ভুল! সঠিক উত্তর সবুজ মার্ক করা হয়েছে।";
-        feedbackEl.style.color = "red";
+        document.getElementById(`option-${currentData.a}`).classList.add('correct');
+        feedbackEl.innerText = "ভুল উত্তর!";
+        feedbackEl.style.color = "#ff5252";
     }
 
     scoreEl.innerText = score;
-    
-    // লেভেল আপ লজিক
-    if(score > 0 && score % 50 === 0) {
-        level++;
-        levelEl.innerText = level;
-    }
-
     setTimeout(() => {
         currentQuiz++;
         loadQuiz();
-    }, 2000);
+    }, 1500);
 }
 
+// 6. অটো নেক্সট (সময় শেষ হলে)
 function autoNext() {
-    // সময় শেষ হলে সঠিক উত্তর দেখিয়ে পরের প্রশ্নে যাবে
-    const currentQuizData = quizData[currentQuiz];
-    const allButtons = optionsContainer.children;
-    for(let btn of allButtons) btn.disabled = true;
-    allButtons[currentQuizData.correct].classList.add('correct');
-    
+    const currentData = quizData[currentQuiz];
+    const allBtns = optionsContainer.children;
+    for(let b of allBtns) b.disabled = true;
+    document.getElementById(`option-${currentData.a}`).classList.add('correct');
     setTimeout(() => {
         currentQuiz++;
         loadQuiz();
-    }, 2000);
+    }, 1500);
 }
 
-function showResult() {
+// 7. লাইফলাইন
+function useLifeline() {
+    if(lifeLineUsed) return;
+    playSound('lifeline');
+    lifeLineUsed = true;
+    lifelineBtn.disabled = true;
+    lifelineBtn.style.opacity = "0.5";
+
+    const currentData = quizData[currentQuiz];
+    const wrongIndices = currentData.o.map((_, i) => i).filter(i => i !== currentData.a);
+    wrongIndices.sort(() => Math.random() - 0.5);
+    const toRemove = wrongIndices.slice(0, 2);
+
+    toRemove.forEach(idx => {
+        document.getElementById(`option-${idx}`).classList.add('option-hidden');
+    });
+}
+
+// 8. গেম শেষ ও রেজাল্ট
+function endGame() {
     gameScreen.classList.add('hidden');
     resultScreen.classList.remove('hidden');
     document.getElementById('final-score-display').innerText = score;
-    
+
+    // হাই স্কোর আপডেট
+    const savedScore = localStorage.getItem('quizHighScore') || 0;
+    if(score > savedScore) {
+        localStorage.setItem('quizHighScore', score);
+    }
+
     const msg = document.getElementById('final-message');
-    if(score >= 80) msg.innerText = "অসাধারণ! আপনি একজন জিনিয়াস! 🌟";
-    else if(score >= 50) msg.innerText = "ভালো খেলেছেন! আর একটু চেষ্টা করুন। 👍";
-    else msg.innerText = "হয়নি! আবার চেষ্টা করুন। 😢";
+    if(score >= (quizData.length * 10 * 0.8)) {
+        playSound('win');
+        msg.innerText = "অসাধারণ! আপনি একজন জিনিয়াস! 🌟";
+        fireConfetti();
+    } else if(score >= (quizData.length * 10 * 0.5)) {
+        msg.innerText = "ভালো খেলেছেন! চালিয়ে যান। 👍";
+    } else {
+        msg.innerText = "হয়নি! আবার চেষ্টা করুন। 😢";
+    }
+}
+
+function fireConfetti() {
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    setTimeout(() => {
+        confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } });
+        confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } });
+    }, 500);
 }
 
 function shareOnFacebook() {
     const url = window.location.href;
     const shareText = `আমি কুইজ মাস্টারে ${score} পয়েন্ট পেয়েছি! তুমি কি আমাকে হারাতে পারবে?`;
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
-    window.open(facebookUrl, '_blank');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`, '_blank');
 }
